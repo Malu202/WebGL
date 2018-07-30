@@ -1,0 +1,7 @@
+{
+  "name": "webgl",
+  "version": "0.0.1",
+  "devDependencies": {
+    "babylonjs": "^3.2.0"
+  }
+}
