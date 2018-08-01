@@ -11,7 +11,7 @@ window.addEventListener('DOMContentLoaded', function(){
         var scene = new BABYLON.Scene(engine);
 
         // create a FreeCamera, and set its position to (x:0, y:5, z:-10)
-        var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5,-10), scene);
+        var camera = new BABYLON.ArcRotateCamera("Camera", -1.5, 1.5, 5, new BABYLON.Vector3(0, 0, 0), scene);
         
         // target the camera to scene origin
         camera.setTarget(BABYLON.Vector3.Zero());
@@ -20,17 +20,11 @@ window.addEventListener('DOMContentLoaded', function(){
         camera.attachControl(canvas, false);
         
         // create a basic light, aiming 0,1,0 - meaning, to the sky
-        var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
-        
-        // create a built-in "sphere" shape; its constructor takes 6 params: name, segment, diameter, scene, updatable, sideOrientation 
-        var sphere = BABYLON.Mesh.CreateSphere('sphere1', 16, 2, scene);
-        
-        // move the sphere upward 1/2 of its height
-        sphere.position.y = 1;
+        var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(.5,1,0), scene);
         
         // create a built-in "ground" shape;
-        var ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
-        
+        //var ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
+
         // return the created scene
         return scene;
     }
@@ -38,6 +32,12 @@ window.addEventListener('DOMContentLoaded', function(){
     // call the createScene function
     var scene = createScene();
 
+
+    BABYLON.SceneLoader.ImportMesh('',"","./models/Monkey/monkey.babylon", scene,function (newMeshes) {
+		scene.executeWhenReady(function () {
+            var animation = scene.beginAnimation(newMeshes[0], 0, 31, true, 1);
+        });
+	});
     // run the render loop
     engine.runRenderLoop(function(){
         scene.render();
